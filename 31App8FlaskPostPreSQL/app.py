@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 from flask_sqlalchemy import SQLAlchemy
 from send_email import send_email
 from sqlalchemy import func
+from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:postgressa@localhost/height_collector'
@@ -22,6 +24,24 @@ class Data(db.Model):
 def index():
     return render_template("index.html")
 
+@app.route("/select_file")
+def select_file():
+    return render_template("select_file.html", btn="download.html")
+
+@app.route("/my_send_file", methods=['POST'])
+def my_send_file():
+    if request.method=='POST':
+        file = request.files['file']
+        file.save(secure_filename(file.filename))
+        with open(file.filename, "a") as f:
+            f.write("This is added after upload.")
+        # content =  file.read()
+        # print(content)
+        # print(file)
+        # print(type(file))
+
+        return render_template("my_send_file.html")
+
 @app.route("/success", methods=['POST'])
 def success():
     if request.method=='POST':
@@ -41,6 +61,11 @@ def success():
             print("Count:"+str(heights_count))
             return render_template("success.html")
         return render_template("index.html", text = "Seems like we 've got something from this email address already")
+
+@app.route("/download")
+def download():
+    # file = request.files["file"]
+    return send_file("Sample.csv", attachment_filename="yourfile.csv", as_attachment=True)
 
 if __name__ == '__main__':
     app.debug  = True

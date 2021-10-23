@@ -13,13 +13,11 @@
     <div class="message">
        {{text | safe }}
     </div>
-    <FORM action="{{url_for('success')}}" method="POST">
-        <input title="Your email would be safe with us" placeholder="Enter your email address" type="email"
-               name="email_name" required><br>
-        <input title="Your data would be safe with us" placeholder="Enter your height in cm" type="number" min="50"
-               max="300" name="height_name" required><br>
+    <FORM action="{{url_for('my_send_file')}}" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required><br>
         <button type="submit">Submit</button>
     </FORM>
+    {% include btn ignore missing %}
 </div>
 </body>
 </html>
