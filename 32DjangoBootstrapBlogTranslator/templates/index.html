@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+{% block content %}
+        <div class="container">
+            {% for post in post_list %}
+                <div class="card m-3">
+                    <div class="card-body">
+                        <h2 class="card-title">{{post.title | title}}</h2>
+                        <p class="card-text">{{post.content | slice:"440"}}</p>
+                        <p class="card-text">{{post.author | title}}</p>
+                        <a href="{% url 'blog_view' post.slug %}" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+{% endblock content%}
