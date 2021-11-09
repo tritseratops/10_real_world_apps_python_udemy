@@ -1,0 +1,8 @@
+1. create html page with all sections:
+    upload file: text, file name,  button
+    table with file content
+    button for file download
+2. Implement file upload
+3. Implement coordinates geocoding
+    update file
+3. Implement file download
