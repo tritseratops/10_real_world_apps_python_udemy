@@ -5,7 +5,11 @@ from dashboard import create_chart
 app = Flask(__name__)
 
 @app.route("/")
-def index():
+def home():
+    return render_template("home.html")
+
+@app.route("/plot")
+def plot():
     script_source, div_source, cdn_js = create_chart()
     return render_template("index.html", script_source = script_source, div_source = div_source, cdn_js = cdn_js)
 
